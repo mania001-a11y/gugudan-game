@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>야옹이 구구단 게임</title>
+<style>
+:root{--bg:#ffe3ee;--card:#fff;--ink:#4a2a3a;--pink:#ff6fa5;--pink2:#ffb3d1;--ok:#2fb86b;--no:#e8484f;--soft:#fff0f6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#3a1e2c;--card:#52293c;--ink:#ffe9f2;--soft:#643349;--pink2:#a8486f}}
+:root[data-theme="dark"]{--bg:#3a1e2c;--card:#52293c;--ink:#ffe9f2;--soft:#643349;--pink2:#a8486f}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"Jua","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+body{display:flex;justify-content:center;padding:16px}
+.wrap{width:100%;max-width:760px;text-align:center}
+.card{background:var(--card);border-radius:36px;padding:20px 20px 28px;box-shadow:0 8px 0 var(--pink2)}
+.cat{width:150px;height:auto;display:block;margin:0 auto}
+h1{font-size:clamp(28px,6vw,44px);margin:6px 0 8px;color:var(--pink)}
+p{font-size:clamp(18px,3.4vw,24px);margin:6px 0 18px;line-height:1.5}
+.btn{font:inherit;font-size:clamp(24px,5vw,34px);font-weight:700;color:#fff;background:var(--pink);border:0;border-radius:999px;padding:18px 44px;min-height:76px;cursor:pointer;box-shadow:0 6px 0 #d9457f}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #d9457f}
+.hud{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;font-size:clamp(18px,3.6vw,26px);font-weight:700;margin-bottom:10px}
+.tog{font:inherit;font-size:clamp(18px,3.6vw,24px);font-weight:700;color:var(--ink);background:var(--soft);border:4px solid var(--pink2);border-radius:999px;padding:12px 28px;min-height:60px;cursor:pointer;margin:0 0 20px}
+.btn2{background:#9b6bff;box-shadow:0 6px 0 #6f43c9}.btn2:active{box-shadow:0 2px 0 #6f43c9}
+.row{display:flex;flex-direction:column;align-items:center;gap:16px}
+.cmp{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0 0 12px;font-size:clamp(18px,3.8vw,26px);font-weight:700}
+.new{color:var(--pink);font-size:clamp(24px,5vw,34px);font-weight:800;margin:0 0 10px}
+.pill{background:var(--soft);border-radius:999px;padding:8px 20px}
+.bar{height:22px;background:var(--soft);border-radius:999px;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;width:100%;background:var(--pink);border-radius:999px;transition:width .1s linear}
+.bar i.low{background:var(--no)}
+.q{font-size:clamp(56px,13vw,100px);font-weight:800;margin:6px 0 14px;letter-spacing:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.opt{font:inherit;font-size:clamp(40px,9vw,64px);font-weight:800;color:var(--ink);background:var(--soft);border:5px solid var(--pink2);border-radius:28px;min-height:110px;cursor:pointer;box-shadow:0 6px 0 var(--pink2)}
+.opt:active{transform:translateY(4px)}
+.opt.right{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.wrong{background:var(--no);border-color:var(--no);color:#fff}
+.opt:disabled{cursor:default}
+.fb{min-height:96px;font-size:clamp(22px,4.6vw,32px);font-weight:700;margin:16px 0 8px;line-height:1.4}
+.fb.ok{color:var(--ok)}.fb.no{color:var(--no)}
+.hide{display:none!important}
+.big{font-size:clamp(64px,16vw,110px);font-weight:800;color:var(--pink);margin:0}
+.stars{font-size:clamp(36px,8vw,56px);margin:4px 0 10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card">
+
+<svg class="cat" viewBox="0 0 200 170" aria-hidden="true">
+<path d="M30 70 L38 14 L82 44Z" fill="#fff" stroke="#4a2a3a" stroke-width="5" stroke-linejoin="round"/>
+<path d="M170 70 L162 14 L118 44Z" fill="#fff" stroke="#4a2a3a" stroke-width="5" stroke-linejoin="round"/>
+<ellipse cx="100" cy="98" rx="84" ry="64" fill="#fff" stroke="#4a2a3a" stroke-width="5"/>
+<ellipse cx="68" cy="100" rx="9" ry="12" fill="#4a2a3a"/>
+<ellipse cx="132" cy="100" rx="9" ry="12" fill="#4a2a3a"/>
+<ellipse cx="100" cy="116" rx="10" ry="7" fill="#ffc83d" stroke="#4a2a3a" stroke-width="3"/>
+<ellipse cx="46" cy="120" rx="12" ry="8" fill="#ffb3d1" opacity=".8"/>
+<ellipse cx="154" cy="120" rx="12" ry="8" fill="#ffb3d1" opacity=".8"/>
+<g stroke="#4a2a3a" stroke-width="4" stroke-linecap="round"><path d="M20 98 L48 104"/><path d="M18 120 L46 116"/><path d="M180 98 L152 104"/><path d="M182 120 L154 116"/></g>
+<g transform="translate(142 40)"><path d="M0 0 L-26 -16 L-26 16Z" fill="#ff6fa5" stroke="#4a2a3a" stroke-width="4" stroke-linejoin="round"/><path d="M0 0 L26 -16 L26 16Z" fill="#ff6fa5" stroke="#4a2a3a" stroke-width="4" stroke-linejoin="round"/><circle r="9" fill="#ff9cc2" stroke="#4a2a3a" stroke-width="4"/></g>
+</svg>
+
+<section id="start">
+<h1>야옹이 구구단 게임</h1>
+<p>2단부터 9단까지!<br>10문제를 10초 안에 풀어 보세요.</p>
+<p id="bestline"></p>
+<button class="tog" id="tog"></button><br>
+<button class="btn" id="go">시작하기</button>
+</section>
+
+<section id="play" class="hide">
+<div class="hud"><span class="pill" id="no">1 / 10</span><span class="pill" id="time">10초</span><span class="pill" id="streak">🔥 연속 0</span><span class="pill" id="score">점수 0</span></div>
+<div class="bar"><i id="fill"></i></div>
+<div class="q" id="q"></div>
+<div class="grid" id="opts"></div>
+<div class="fb" id="fb"></div>
+<button class="btn hide" id="next">다음 문제</button>
+</section>
+
+<section id="end" class="hide">
+<h1>게임 끝!</h1>
+<div class="stars" id="stars"></div>
+<p class="big" id="final"></p>
+<div class="new hide" id="newrec">🏆 새 기록이에요!</div>
+<div class="cmp" id="cmp"></div>
+<p id="msg"></p>
+<div class="row"><button class="btn btn2 hide" id="retry">틀린 문제만 다시 풀기</button><button class="btn" id="again">처음부터 다시 하기</button></div>
+</section>
+
+</div>
+</div>
+<script>
+(function(){
+var BASE=10,MIN=5,TOTAL=10;
+var total,idx,score,right,streak,maxStreak,timer,left,sec,cur,locked,list,wrongs,full,best=0,speedOn=true;
+var $=function(i){return document.getElementById(i)};
+function ld(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function sv(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+best=parseInt(ld("gugudan-best"),10)||0;
+speedOn=ld("gugudan-speed")!=="off";
+function show(id){["start","play","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)})}
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function home(){
+  $("bestline").textContent=best>0?"🏆 최고 기록 "+best+"점":"아직 기록이 없어요. 첫 기록에 도전해요!";
+  $("tog").textContent="⚡ 정답 5개마다 1초 빨라지기: "+(speedOn?"켜짐":"꺼짐");
+  show("start");
+}
+function makeOpts(a,b){
+  var ans=a*b,set=[ans],g=0;
+  while(set.length<4&&g++<200){
+    var c,r=Math.random();
+    if(r<.5)c=a*(b+rnd(-2,2));else if(r<.8)c=(a+rnd(-1,1))*b;else c=ans+rnd(-6,6);
+    if(c>0&&set.indexOf(c)<0)set.push(c);
+  }
+  for(var i=set.length-1;i>0;i--){var j=rnd(0,i),t=set[i];set[i]=set[j];set[j]=t}
+  return set;
+}
+function begin(qs){
+  list=qs;full=!qs;
+  total=full?TOTAL:qs.length;
+  idx=0;score=0;right=0;streak=0;maxStreak=0;wrongs=[];sec=BASE;
+  show("play");nextQ();
+}
+function nextQ(){
+  if(idx>=total)return finish();
+  idx++;locked=false;
+  var q=full?{a:rnd(2,9),b:rnd(1,9)}:list[idx-1];
+  cur={a:q.a,b:q.b,ans:q.a*q.b,opts:makeOpts(q.a,q.b)};
+  var ns=speedOn?Math.max(MIN,BASE-Math.floor(right/5)):BASE;
+  var faster=ns<sec;sec=ns;left=sec;
+  $("no").textContent=idx+" / "+total;
+  $("score").textContent="점수 "+score;
+  $("streak").textContent="🔥 연속 "+streak;
+  $("q").textContent=cur.a+" × "+cur.b+" = ?";
+  var fb=$("fb");fb.className="fb";
+  fb.textContent=faster?"⚡ 빨라졌어요! 이제 "+sec+"초":"";
+  $("next").classList.add("hide");
+  var box=$("opts");box.innerHTML="";
+  cur.opts.forEach(function(v){
+    var b=document.createElement("button");b.className="opt";b.textContent=v;b.dataset.v=v;
+    b.onclick=function(){answer(v)};box.appendChild(b);
+  });
+  tick();clearInterval(timer);
+  timer=setInterval(function(){left-=0.1;if(left<=0){left=0;tick();answer(null)}else tick()},100);
+}
+function tick(){
+  $("time").textContent=Math.ceil(left)+"초";
+  var f=$("fill");f.style.width=(left/sec*100)+"%";f.classList.toggle("low",left<=3);
+}
+function answer(v){
+  if(locked)return;locked=true;clearInterval(timer);
+  var ok=(v===cur.ans),fb=$("fb");
+  Array.prototype.forEach.call($("opts").children,function(b){
+    b.disabled=true;
+    if(+b.dataset.v===cur.ans)b.classList.add("right");
+    else if(v!==null&&+b.dataset.v===v)b.classList.add("wrong");
+  });
+  if(ok){
+    score+=10;right++;streak++;if(streak>maxStreak)maxStreak=streak;
+    $("score").textContent="점수 "+score;$("streak").textContent="🔥 연속 "+streak;
+    fb.textContent="🎉 정답이에요! +10점";fb.className="fb ok";
+    setTimeout(nextQ,1100);
+  }else{
+    streak=0;$("streak").textContent="🔥 연속 0";
+    wrongs.push({a:cur.a,b:cur.b});
+    fb.innerHTML=(v===null?"⏰ 시간이 끝났어요!<br>":"😿 아쉬워요!<br>")+"정답은 "+cur.a+" × "+cur.b+" = "+cur.ans+" 이에요";
+    fb.className="fb no";
+    $("next").textContent=idx>=total?"결과 보기":"다음 문제";
+    $("next").classList.remove("hide");
+  }
+}
+function finish(){
+  clearInterval(timer);show("end");
+  $("final").textContent=score+"점";
+  var n=right>=total*.9?3:right>=total*.6?2:right>=total*.3?1:0;
+  $("stars").textContent="⭐".repeat(n)+"☆".repeat(3-n);
+  var cmp=$("cmp"),nr=$("newrec");nr.classList.add("hide");
+  var tail=" (최고 연속 정답 "+maxStreak+"번)";
+  if(full){
+    var isNew=score>best;
+    cmp.innerHTML='<span class="pill">이번 점수 '+score+'점</span><span class="pill">최고 기록 '+Math.max(best,score)+'점</span>';
+    if(isNew&&score>0){nr.classList.remove("hide");best=score;sv("gugudan-best",String(best))}
+    else if(score===best&&score>0){cmp.innerHTML+='<span class="pill">최고 기록과 같아요!</span>'}
+    else{cmp.innerHTML='<span class="pill">이번 점수 '+score+'점</span><span class="pill">최고 기록 '+best+'점</span><span class="pill">'+(best-score)+'점 차이</span>'}
+  }else{
+    cmp.innerHTML='<span class="pill">틀린 문제 다시 풀기 결과 (기록에는 들어가지 않아요)</span>';
+  }
+  $("msg").textContent=right+"문제를 맞혔어요!"+tail+" "+(wrongs.length===0?"모두 맞혔어요! 🎀":"틀린 문제 "+wrongs.length+"개가 남았어요.");
+  $("retry").classList.toggle("hide",wrongs.length===0);
+}
+$("go").onclick=function(){begin(null)};
+$("again").onclick=function(){begin(null)};
+$("retry").onclick=function(){begin(wrongs.slice())};
+$("next").onclick=nextQ;
+$("tog").onclick=function(){speedOn=!speedOn;sv("gugudan-speed",speedOn?"on":"off");home()};
+home();
+})();
+</script>
+</body>
+</html>
